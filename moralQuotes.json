@@ -1,19 +1,33 @@
-{  
-   "quotes":[  
-      {
-        "qtId": 1,
-        "English":[
-          {
-            "q1": "Barking dogs, seldom bite"
-          }
-        ],
-        "Hindi":[
-          {
-            "q1": "Bhonkne wale kutte, kaatate nahi",
-            "q2": "Garajne wale badal, baraste nahi"
-          }
-        ],
-        "Telugu": ""
-      }
-   ] 
+{
+  "quotes": [
+    {
+      "qtId": 1,
+      "English": [
+        {
+          "q1": "Barking dogs, seldom bite"
+        }
+      ],
+      "Hindi": [
+        {
+          "q1": "Bhonkne wale kutte, kaatate nahi",
+          "q2": "Garajne wale badal, baraste nahi"
+        }
+      ],
+      "Telugu": ""
+    },
+    {
+      "qtId": 2,
+      "English": [
+        {
+          "q1": "When in Rome, be Roman"
+        }
+      ],
+      "Hindi": [
+        {
+          "q1": "Jaisa desh, waisa bhesh"
+        }
+      ],
+      "Telugu": ""
+    }
+  ]
 }
