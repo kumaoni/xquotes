@@ -2,8 +2,17 @@
    "quotes":[  
       {
         "qtId": 1,
-        "English": "Barking dogs, seldom bite",
-        "Hindi": "Bhonkne wale kutte, kaatate nahi",
+        "English":[
+          {
+            "q1": "Barking dogs, seldom bite"
+          }
+        ],
+        "Hindi":[
+          {
+            "q1": "Bhonkne wale kutte, kaatate nahi",
+            "q2": "Garajne wale badal, baraste nahi"
+          }
+        ],
         "Telugu": ""
       }
    ] 
