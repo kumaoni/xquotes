@@ -59,6 +59,19 @@
         }
       ],
       "Telugu": ""
+    },
+    {
+      "qtId": 5,
+      "Who Said": "Mogambo (Amrish Puri)",
+      "Movie": "Mr. India",
+      "Year": "1987",
+      "English": "",
+      "Hindi": [
+        {
+          "q1": "Mogambo, khush hua"
+        }
+      ],
+      "Telugu": ""
     }
   ]
 }
