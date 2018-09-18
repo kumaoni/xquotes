@@ -15,7 +15,7 @@
     },
     {
       "qtId": 2,
-      "Who Said": "Gabbar (Amjad Khan)",
+      "Who Said": "Gabbar",
       "Movie": "Sholay",
       "Year": "1975",
       "English": "",
@@ -28,7 +28,7 @@
     },
     {
       "qtId": 3,
-      "Who Said": "Veeru (Dharmendar)",
+      "Who Said": "Veeru",
       "Movie": "Sholay",
       "Year": "1975",
       "English": [
@@ -45,7 +45,7 @@
     },
     {
       "qtId": 4,
-      "Who Said": "Jai (Amitabh Bachhan)",
+      "Who Said": "Jai",
       "Movie": "Sholay",
       "Year": "1975",
       "English": [
