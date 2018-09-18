@@ -25,6 +25,19 @@
         }
       ],
       "Telugu": ""
+    },
+    {
+      "qtId": 3,
+      "Who Said": "Veeru",
+      "Movie": "Sholay",
+      "Year": "1975",
+      "English": "",
+      "Hindi": [
+        {
+          "q1": "Basanti, in kutton ke saamne mat nachna"
+        }
+      ],
+      "Telugu": ""
     }
   ]
 }
