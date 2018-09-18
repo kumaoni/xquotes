@@ -56,7 +56,11 @@
     },
     {
       "qtId": 4,
-      "English": "",
+      "English": [
+        {
+          "q1": "Let bygones be bygones"
+        }
+      ],
       "Hindi": [
         {
           "q1": "Raat gayi, baat gayi"
