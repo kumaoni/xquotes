@@ -12,6 +12,19 @@
         }
       ],
       "Telugu": ""
+    },
+    {
+      "qtId": 2,
+      "Who Said": "Gabbar",
+      "Movie": "Sholay",
+      "Year": "1975",
+      "English": "",
+      "Hindi": [
+        {
+          "q1": "Ab, tera kya hoga Kalia"
+        }
+      ],
+      "Telugu": ""
     }
   ]
 }
