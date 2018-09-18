@@ -25,6 +25,23 @@
         }
       ],
       "Telugu": ""
+    },
+    {
+      "qtId": 3,
+      "Who Said": "Veeru",
+      "Movie": "Sholay",
+      "Year": "1975",
+      "English": [
+        {
+          "q1": "Basanti, no need to dance in front of these dogs"
+        }
+      ],
+      "Hindi": [
+        {
+          "q1": "Basanti, in kutton ke saamne mat nachna"
+        }
+      ],
+      "Telugu": ""
     }
   ]
 }
