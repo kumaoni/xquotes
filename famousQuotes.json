@@ -11,6 +11,18 @@
       ],
       "Hindi": "",
       "Telugu": ""
+    },
+    {
+      "qtId": 2,
+      "Author": "Subhash Chandra Bose",
+      "Year": "TBD",
+      "English": "",
+      "Hindi": [
+        {
+          "q1": "Tum mujhe khoon dou, main tumhe azadi dunga"
+        }
+      ],
+      "Telugu": ""
     }
   ]
 }
