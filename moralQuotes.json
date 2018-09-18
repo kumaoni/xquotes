@@ -29,7 +29,7 @@
       ],
       "Telugu": ""
     },
-      {
+    {
       "qtId": 3,
       "English": [
         {
@@ -38,7 +38,8 @@
       ],
       "Hindi": [
         {
-          "q1": "jo boge wo paaoge"
+          "q1": "Jo bo-ouge, wo pa-ouge",
+          "q2": "Jaisi karni, waisi bharni"
         }
       ],
       "Telugu": ""
