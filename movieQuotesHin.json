@@ -42,6 +42,23 @@
         }
       ],
       "Telugu": ""
+    },
+    {
+      "qtId": 4,
+      "Who Said": "Jai",
+      "Movie": "Sholay",
+      "Year": "1975",
+      "English": [
+        {
+          "q1": "Basanti, what is your name?"
+        }
+      ],
+      "Hindi": [
+        {
+          "q1": "Tumhara naam kya hai, Basanti"
+        }
+      ],
+      "Telugu": ""
     }
   ]
 }
