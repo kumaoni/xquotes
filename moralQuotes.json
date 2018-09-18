@@ -28,6 +28,20 @@
         }
       ],
       "Telugu": ""
+    },
+      {
+      "qtId": 3,
+      "English": [
+        {
+          "q1": "As you sow, so shall you reap"
+        }
+      ],
+      "Hindi": [
+        {
+          "q1": "jo boge wo paaoge"
+        }
+      ],
+      "Telugu": ""
     }
   ]
 }
