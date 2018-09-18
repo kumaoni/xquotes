@@ -15,7 +15,7 @@
     },
     {
       "qtId": 2,
-      "Who Said": "Gabbar",
+      "Who Said": "Gabbar (Amjad Khan)",
       "Movie": "Sholay",
       "Year": "1975",
       "English": "",
@@ -28,7 +28,7 @@
     },
     {
       "qtId": 3,
-      "Who Said": "Veeru",
+      "Who Said": "Veeru (Dharmendar)",
       "Movie": "Sholay",
       "Year": "1975",
       "English": [
@@ -39,6 +39,23 @@
       "Hindi": [
         {
           "q1": "Basanti, in kutton ke saamne mat nachna"
+        }
+      ],
+      "Telugu": ""
+    },
+    {
+      "qtId": 4,
+      "Who Said": "Jai (Amitabh Bachhan)",
+      "Movie": "Sholay",
+      "Year": "1975",
+      "English": [
+        {
+          "q1": "Basanti, what is your name?"
+        }
+      ],
+      "Hindi": [
+        {
+          "q1": "Tumhara naam kya hai, Basanti"
         }
       ],
       "Telugu": ""
