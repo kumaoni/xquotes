@@ -72,6 +72,19 @@
         }
       ],
       "Telugu": ""
+    },
+    {
+      "qtId": 6,
+      "Who Said": "Shahenshah (Amitabh Bachhan)",
+      "Movie": "Shahenshah",
+      "Year": "1988",
+      "English": "",
+      "Hindi": [
+        {
+          "q1": "Rishte mein tou hum tumhare baap lagte hain, naam hai, Shahenshah"
+        }
+      ],
+      "Telugu": ""
     }
   ]
 }
