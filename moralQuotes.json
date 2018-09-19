@@ -55,7 +55,7 @@
       "Telugu": ""
     },
     {
-      "qtId": 4,
+      "qtId": 5,
       "English": [
         {
           "q1": "Let bygones be bygones"
@@ -64,6 +64,16 @@
       "Hindi": [
         {
           "q1": "Raat gayi, baat gayi"
+        }
+      ],
+      "Telugu": ""
+    },
+    {
+      "qtId": 6,
+      "English": "",
+      "Hindi": [
+        {
+          "q1": "Bandar kya jaane, adrak ka swaad"
         }
       ],
       "Telugu": ""

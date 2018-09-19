@@ -23,6 +23,18 @@
         }
       ],
       "Telugu": ""
+    },
+    {
+      "qtId": 3,
+      "Author": "Martin Luther King, Jr.",
+      "Year": "1963",
+      "English": [
+        {
+          "q1": "I, have a dream"
+        }
+      ],
+      "Hindi": "",
+      "Telugu": ""
     }
   ]
 }
