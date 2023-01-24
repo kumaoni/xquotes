@@ -85,6 +85,19 @@
         }
       ],
       "Telugu": ""
+    },
+    {
+      "qtId": 7,
+      "Who Said": "Ajay (Shah Rukh Khan)",
+      "Movie": "Baazigar",
+      "Year": "1993",
+      "English": "The one who wins even in defeat, is the real Gambler",
+      "Hindi": [
+        {
+          "q1": "Har kar jeetne wale ko Baazigar kehte hain"
+        }
+      ],
+      "Telugu": ""
     }
   ]
 }
