@@ -20,6 +20,7 @@ jobs:
         # Default: ${{ github.repository }}
         repository: 'polakala/LemonHatApp'
         ref: 'forWebUI'
+        ssh-key: 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMxm4V2b//pZ+MhFF/E1gd66a/2aNMLnQ+k87M1vZzP3 anshuman.manral@lemonhat.io'
         
       
     #steps:
