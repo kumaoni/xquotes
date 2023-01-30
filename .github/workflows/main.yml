@@ -6,6 +6,7 @@ on:
   push:
     branches:
     - anshu6
+    - anshu4
 
 jobs:
   build:
