@@ -98,6 +98,19 @@
         }
       ],
       "Telugu": ""
+    },
+    {
+      "qtId": 8,
+      "Who Said": "Durga (Raakhee)",
+      "Movie": "Karan Arjun",
+      "Year": "1995",
+      "English": "My Karan Arjun have arrived",
+      "Hindi": [
+        {
+          "q1": "Mere Karan Arjun aa gaye"
+        }
+      ],
+      "Telugu": ""
     }
   ]
 }
