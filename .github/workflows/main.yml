@@ -18,10 +18,7 @@ jobs:
        with:
         # Repository name with owner. For example, actions/checkout
         # Default: ${{ github.repository }}
-        repository: 'polakala/LemonHatApp'
-        ref: 'forWebUI'
-        ssh-key: 'b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZWQyNTUxOQAAACDMZuFdm//6WfjIRRfxNYHeumv9mjTC50PpPOzNb2cz9wAAAKD/osra/6LK2gAAAAtzc2gtZWQyNTUxOQAAACDMZuFdm//6WfjIRRfxNYHeumv9mjTC50PpPOzNb2cz9wAAAECtcbvOAscXp3lbXhiEdJS+lF/9jWQuBwfstnFI6Pwje8xm4V2b//pZ+MhFF/E1gd66a/2aNMLnQ+k87M1vZzP3AAAAG2Fuc2h1bWFuLm1hbnJhbEBsZW1vbmhhdC5pbwEC'
-        token: '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'
+        ref: 'anshu3'
         
       
     #steps:
