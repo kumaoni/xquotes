@@ -10,15 +10,18 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    #container: 
-     # image: postman/newman
+    container: 
+     image: postman/newman
     steps:
      - name: Checkout
        uses: actions/checkout@v3
        with:
         # Repository name with owner. For example, actions/checkout
         # Default: ${{ github.repository }}
-        ref: 'anshu3'
+        ref: 'anshu2'
+        
+     - name: Run API Tests
+       run: newman run ./Automation/Postman/collections/UserCheckoutFlow/"User Checkout Flow.postman_collection.json" -e ./Automation/Postman/envs/DevQA.postman_environment.json -d ./Automation/Postman/collections/UserCheckoutFlow/DataFiles/DevQA_UserCheckoutFlow.json
         
       
     #steps:
