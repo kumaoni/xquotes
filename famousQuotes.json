@@ -23,6 +23,30 @@
         }
       ],
       "Telugu": ""
+    },
+    {
+      "qtId": 3,
+      "Author": "Martin Luther King, Jr.",
+      "Year": "1963",
+      "English": [
+        {
+          "q1": "I, have a dream"
+        }
+      ],
+      "Hindi": "",
+      "Telugu": "naku, oka kala undhi"
+    },
+    {
+      "qtId": 4,
+      "Author": "Friedrich Nietzsche",
+      "Year": "N/A",
+      "English": [
+        {
+          "q1": "It is my ambition to say in ten sentences what others say in a whole book"
+        }
+      ],
+      "Hindi": "",
+      "Telugu": ""
     }
   ]
 }
