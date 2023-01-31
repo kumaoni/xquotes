@@ -21,11 +21,22 @@ jobs:
         # Default: ${{ github.repository }}
         ref: 'anshu2'
         
-     #- name: Run API Tests
-     #  run: newman run ./Automation/Postman/collections/UserCheckoutFlow/"User Checkout Flow.postman_collection.json" -e ./Automation/Postman/envs/DevQA.postman_environment.json -d ./Automation/Postman/collections/UserCheckoutFlow/DataFiles/DevQA_UserCheckoutFlow.json
+     - name: Run API Tests
+       run: newman run ./Automation/Postman/collections/UserCheckoutFlow/"User Checkout Flow.postman_collection.json" -e ./Automation/Postman/envs/DevQA.postman_environment.json -d ./Automation/Postman/collections/UserCheckoutFlow/DataFiles/DevQA_UserCheckoutFlow.json
      - name: Dump GitHub context
        id: github_context_step
        run: echo '${{ toJSON(github) }}'
+       
+     # Example 1
+     - name: Get changed files
+       id: changed-files
+       uses: tj-actions/changed-files@v35
+
+     - name: List all changed files
+       run: |
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            echo "$file was changed"
+          done
         
       
     #steps:
