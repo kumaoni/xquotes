@@ -1,0 +1,953 @@
+{
+	"info": {
+		"_postman_id": "3124f3f8-9617-4cf4-ad79-a9158d9c92d6",
+		"name": "User Checkout Flow",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5423152"
+	},
+	"item": [
+		{
+			"name": "SetUp",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let inputPhoneNo = pm.iterationData.get(\"PhoneNumber\");",
+							"if (typeof(inputPhoneNo) != \"string\")",
+							"    inputPhoneNo = '+' + inputPhoneNo.toString();",
+							"",
+							"console.log(\"inputPhoneNo\",inputPhoneNo);",
+							"",
+							"if ((inputPhoneNo == pm.collectionVariables.get(\"testPhoneNumber\")) && (pm.collectionVariables.get(\"authKey\"))) {",
+							"    postman.setNextRequest(\"GetUserDetails\");",
+							"} else {",
+							"    pm.collectionVariables.set(\"testPhoneNumber\",inputPhoneNo);",
+							"}",
+							"    pm.collectionVariables.set(\"testStoreName\",pm.iterationData.get(\"StoreName\"));",
+							"    pm.collectionVariables.set(\"testItemName\",pm.iterationData.get(\"ItemName\"));",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://www.postman-echo.com/delay/0",
+					"protocol": "https",
+					"host": [
+						"www",
+						"postman-echo",
+						"com"
+					],
+					"path": [
+						"delay",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SignIn",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonRespData = pm.response.json();",
+							"console.log(\"SignIn jsonRespData\",jsonRespData);",
+							"",
+							"pm.collectionVariables.set(\"sessionId\", jsonRespData.Session);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-app",
+						"value": "{{appName}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"uClientId\": \"{{cognitoClientId}}\",\n    \"username\": \"{{testPhoneNumber}}\",\n    \"uEmail\": \"\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/v1/user/signin",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"v1",
+						"user",
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "VerifyOtp",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonRespData = pm.response.json();",
+							"console.log(\"VerifyOtp jsonRespData \",jsonRespData);",
+							"",
+							"pm.collectionVariables.set(\"authKey\", jsonRespData.AuthenticationResult.IdToken);",
+							"pm.collectionVariables.set(\"userToken\", jsonRespData.userInfo[0].ID);",
+							"pm.collectionVariables.set(\"userListId\", jsonRespData.userInfo[0].ListID);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"ClientId\": \"{{cognitoClientId}}\",\n    \"Username\": \"{{testPhoneNumber}}\",\n    \"Answer\": \"1234\",\n    \"Email\": \"\",\n    \"Session\": \"{{sessionId}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{authBaseUrl}}/verifyotp",
+					"host": [
+						"{{authBaseUrl}}"
+					],
+					"path": [
+						"verifyotp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetUserDetails",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonRespData = pm.response.json();",
+							"console.log(\"GetUserDetails jsonRespData \",jsonRespData);",
+							"",
+							"pm.collectionVariables.set(\"userZip\", jsonRespData[0].uZip);",
+							"// pm.variables.set(\"localuserZip\", jsonRespData[0].uZip);",
+							"",
+							"let userAddresses = jsonRespData[0].uAddress;",
+							"",
+							"for (let itr = 0; itr < userAddresses.length; itr++) {",
+							"    if (userAddresses[itr].uIsDefault == \"true\" ) {",
+							"        pm.collectionVariables.set(\"userDfltAddrId\", userAddresses[itr].uAID);",
+							"        // pm.variables.set(\"localuserDfltAddrId\", userAddresses[itr].uAID);",
+							"        break;",
+							"    }",
+							"}",
+							"",
+							"let userCards = jsonRespData[0].uCards;",
+							"",
+							"for (let itr = 0; itr < userCards.length; itr++) {",
+							"    if (userCards[itr].uIsDefault == \"true\" ) {",
+							"        pm.collectionVariables.set(\"userDfltPymtId\", userCards[itr].uCSourceID);",
+							"        // pm.variables.set(\"localuserDfltPymtId\", userCards[itr].uCSourceID);",
+							"        break;",
+							"    }",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-app",
+						"value": "{{appName}}",
+						"type": "text"
+					},
+					{
+						"key": "x-user-token",
+						"value": "{{userToken}}",
+						"type": "text"
+					},
+					{
+						"key": "authorization",
+						"value": "{{authKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/v1/user",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"v1",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SearchShop",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonRespData = pm.response.json();",
+							"console.log(\"SeacrhShop jsonRespData \",jsonRespData);",
+							"",
+							"pm.test(\"Shop Found\", function () {",
+							"",
+							"    pm.expect(jsonRespData.responseData.length).to.greaterThan(0);",
+							"",
+							"    pm.collectionVariables.set(\"checkoutShopId\", jsonRespData.responseData[0].ID);",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-app",
+						"value": "{{appName}}",
+						"type": "text"
+					},
+					{
+						"key": "x-user-token",
+						"value": "{{userToken}}",
+						"type": "text"
+					},
+					{
+						"key": "authorization",
+						"value": "{{authKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{searchBaseUrl}}/store?q={{testStoreName}}",
+					"host": [
+						"{{searchBaseUrl}}"
+					],
+					"path": [
+						"store"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "{{testStoreName}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SearchItem",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonRespData = pm.response.json();",
+							"console.log(\"SearchItem jsonRespData \",jsonRespData);",
+							"",
+							"pm.test(\"Item Found\", function () {",
+							"",
+							"    pm.expect(jsonRespData.responseData.length).to.greaterThan(0);",
+							"",
+							"    pm.collectionVariables.set(\"catalogueItemId\", jsonRespData.responseData[0].ID);",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-app",
+						"value": "{{appName}}",
+						"type": "text"
+					},
+					{
+						"key": "x-user-token",
+						"value": "{{userToken}}",
+						"type": "text"
+					},
+					{
+						"key": "authorization",
+						"value": "{{authKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{searchBaseUrl}}/item?kq={{testItemName}}&s={{checkoutShopId}}",
+					"host": [
+						"{{searchBaseUrl}}"
+					],
+					"path": [
+						"item"
+					],
+					"query": [
+						{
+							"key": "kq",
+							"value": "{{testItemName}}"
+						},
+						{
+							"key": "s",
+							"value": "{{checkoutShopId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetShopDetails",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonRespData = pm.response.json();",
+							"console.log(\"GetShopDetails jsonRespData \",jsonRespData);",
+							"",
+							"pm.collectionVariables.set(\"shopCatalogueUrl\", jsonRespData[0].sCURL);",
+							"",
+							"let delivGrpData = jsonRespData[0].sDSlot;",
+							"",
+							"let deliveryDate =  new Date(delivGrpData.sDate).toISOString();",
+							"console.log(\"deliveryDate\", deliveryDate);",
+							"pm.collectionVariables.set(\"orderDeliveryDate\", deliveryDate);",
+							"",
+							"let deliverySlot = `${delivGrpData.day}, ${delivGrpData.sTime} to ${delivGrpData.eTime}`;",
+							"console.log(\"deliverySlot\", deliverySlot);",
+							"pm.collectionVariables.set(\"orderDeliverySlot\", deliverySlot);",
+							"",
+							"pm.collectionVariables.set(\"orderSbhId\", delivGrpData.sbhId);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-app",
+						"value": "{{appName}}",
+						"type": "text"
+					},
+					{
+						"key": "x-user-token",
+						"value": "{{userToken}}",
+						"type": "text"
+					},
+					{
+						"key": "authorization",
+						"value": "{{authKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/v1/store/{{checkoutShopId}}?z={{userZip}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"v1",
+						"store",
+						"{{checkoutShopId}}"
+					],
+					"query": [
+						{
+							"key": "z",
+							"value": "{{userZip}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetShopCatalogue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonRespData = pm.response.json();",
+							"",
+							"pm.test(\"Catalogue url present and has data\", function () {",
+							"",
+							"    pm.expect(jsonRespData.length).to.greaterThan(0);",
+							"",
+							"});",
+							"// console.log(\"GetShopCatalogue jsonRespData \",jsonRespData);",
+							"",
+							"// let testItemName = pm.collectionVariables.get(\"testItemName\");",
+							"// console.log(\"testItemName \",testItemName);",
+							"",
+							"// for (itr = 0; itr < jsonRespData.length; itr++) {",
+							"//     console.log(\"itr\", itr);",
+							"//     let item = jsonRespData[itr];",
+							"//     if (item.pName == testItemName) {",
+							"//         console.log(\"item found in index\",itr);",
+							"//         pm.collectionVariables.set(\"catalogueItemId\", item.pID);",
+							"//         break;",
+							"//     }",
+							"// }",
+							"    ",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{shopCatalogueUrl}}",
+					"host": [
+						"{{shopCatalogueUrl}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddItemToCart",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let orderQty = Math.round(pm.variables.replaceIn(\"{{$randomInt}}\")%10) + 1;",
+							"",
+							"console.log(\"orderQty\", orderQty);",
+							"",
+							"pm.collectionVariables.set(\"checkoutQty\", orderQty);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonRespData = pm.response.json();",
+							"console.log(\"AddItemToCart jsonRespData \",jsonRespData);",
+							"",
+							"pm.collectionVariables.set(\"checkoutItemId\", jsonRespData.itemID);",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-app",
+						"value": "{{appName}}",
+						"type": "text"
+					},
+					{
+						"key": "x-user-token",
+						"value": "{{userToken}}",
+						"type": "text"
+					},
+					{
+						"key": "authorization",
+						"value": "{{authKey}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"pListID\": \"{{userListId}}\",\n    \"pQuantity\": \"{{checkoutQty}}\",\n    \"pPrice\": 35,\n    \"sID\": \"{{checkoutShopId}}\",\n    \"pTImg\": \"https://s3.amazonaws.com/lhmasterimages/ItemCatalogue/6b23b66196301a19c6a0ec6c2239f1459868874388d9c2f120\",\n    \"Src\": \"{{catalogueItemId}}\",\n    \"pUnit\": 1,\n    \"pMsr\": \"6\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/v1/cart",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"v1",
+						"cart"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "VerifyUserCart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonRespData = pm.response.json();",
+							"console.log(\"VerifyUserCart jsonRespData \",jsonRespData);",
+							"",
+							"let expectedItemId = pm.collectionVariables.get(\"checkoutItemId\");",
+							"console.log(\"expectedItemId \",expectedItemId);",
+							"",
+							"let expectedItemQty = pm.collectionVariables.get(\"checkoutQty\");",
+							"console.log(\"expectedItemQty \",expectedItemQty);",
+							"",
+							"pm.test(\"Item added to cart\", function () {",
+							"",
+							"    let itemFound =  false;",
+							"",
+							"    for (itr = 0; itr < jsonRespData.length; itr++) {",
+							"",
+							"        let resp = jsonRespData[itr];",
+							"",
+							"        if ((resp.ItemID == expectedItemId) && (resp.pQuantity == expectedItemQty)) {",
+							"            itemFound = true;",
+							"",
+							"            let cartItemDetails = {",
+							"                \"orISrc\": resp.pID,",
+							"                \"orIQty\": resp.pQuantity,",
+							"                \"sComboItem\": resp.SelectedComboItems,",
+							"                \"orIReplace\": resp.pReplaceable,",
+							"                \"orINotes\": resp.pNotes",
+							"            }",
+							"            console.log (\"checkoutCart\", JSON.stringify(cartItemDetails))",
+							"            pm.collectionVariables.set(\"checkoutCart\", JSON.stringify(cartItemDetails));",
+							"            break;",
+							"        }",
+							"            ",
+							"    }",
+							"",
+							"    pm.expect(itemFound).to.eql(true);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-app",
+						"value": "{{appName}}",
+						"type": "text"
+					},
+					{
+						"key": "x-user-token",
+						"value": "{{userToken}}",
+						"type": "text"
+					},
+					{
+						"key": "authorization",
+						"value": "{{authKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/v1/cart?z={{userZip}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"v1",
+						"cart"
+					],
+					"query": [
+						{
+							"key": "z",
+							"value": "{{userZip}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PlaceOrder",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonRespData = pm.response.json();",
+							"console.log(\"PlaceOrder jsonRespData \",jsonRespData);",
+							"",
+							"pm.test(\"Order placed\", function () {",
+							"    pm.response.to.have.status(201);",
+							"})",
+							"",
+							"pm.collectionVariables.set(\"placedOrderNo\", jsonRespData[\"Order No\"]);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-app",
+						"value": "{{appName}}",
+						"type": "text"
+					},
+					{
+						"key": "x-user-token",
+						"value": "{{userToken}}",
+						"type": "text"
+					},
+					{
+						"key": "authorization",
+						"value": "{{authKey}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"orCpn\": [],\n    \"orDInsts\": \"\",\n    \"orMode\": 1,\n    \"orLDC\": 1,\n    \"orLId\": \"{{userListId}}\",\n    \"orEDate\": \"{{orderDeliveryDate}}\",\n    \"orSlot\": \"{{orderDeliverySlot}}\",\n    \"orSrc\": 2,\n    \"orSAId\": \"{{userDfltAddrId}}\",\n    \"orSbhId\": \"{{orderSbhId}}\",\n    \"orSId\": \"{{checkoutShopId}}\",\n    \"orItem\": [{{checkoutCart}}],\n    \"orSaveCard\": 1,\n    \"orPayMethod\": \"{{userDfltPymtId}}\",\n    \"orUWallet\": 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/v1/order",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"v1",
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "VerifyOrder",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonRespData = pm.response.json();",
+							"console.log(\"VerifyOrder jsonRespData \",jsonRespData);",
+							"",
+							"pm.test(\"Order present in DB\", function () {",
+							"",
+							"    pm.expect(jsonRespData.length).to.greaterThan(0);",
+							"",
+							"});",
+							"",
+							"pm.collectionVariables.set(\"placedOrderId\", jsonRespData[0][\"orId\"]);",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-app",
+						"value": "{{appName}}",
+						"type": "text"
+					},
+					{
+						"key": "x-user-token",
+						"value": "{{userToken}}",
+						"type": "text"
+					},
+					{
+						"key": "authorization",
+						"value": "{{authKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/v1/order?q={{placedOrderNo}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"v1",
+						"order"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "{{placedOrderNo}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CancelOrder",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonRespData = pm.response.json();",
+							"console.log(\"CancelOrder jsonRespData \",jsonRespData);",
+							"",
+							"pm.test(\"Order cancelled\", function () {",
+							"    pm.response.to.have.status(200);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-app",
+						"value": "{{appName}}",
+						"type": "text"
+					},
+					{
+						"key": "x-user-token",
+						"value": "{{userToken}}",
+						"type": "text"
+					},
+					{
+						"key": "authorization",
+						"value": "{{authKey}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"orState\":\"Cancelled\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/v1/order/{{placedOrderId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"v1",
+						"order",
+						"{{placedOrderId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TearDown",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"console.log(\"pm.info.iteration\",pm.info.iteration);",
+							"console.log(\"pm.info.iterationCount\",pm.info.iterationCount);",
+							"",
+							"if ((pm.info.iteration + 1) == pm.info.iterationCount) {",
+							"    console.log(\"Clearing collection data\");",
+							"    pm.collectionVariables.clear();",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://www.postman-echo.com/delay/0",
+					"protocol": "https",
+					"host": [
+						"www",
+						"postman-echo",
+						"com"
+					],
+					"path": [
+						"delay",
+						"0"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
