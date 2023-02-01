@@ -51,7 +51,6 @@ jobs:
           echo "One or more files in the docs folder has changed."
           echo "List all the files that have changed: ${{ steps.changed-files-specific.outputs.all_changed_files }}"
           npm install -g newman-reporter-htmlextra
-          #newman run ./Automation/Postman/collections/UserCheckoutFlow/"User Checkout Flow.postman_collection.json" -e ./Automation/Postman/envs/DevQA.postman_environment.json -d ./Automation/Postman/collections/UserCheckoutFlow/DataFiles/DevQA_UserCheckoutFlow.json
           newman run ./Automation/Postman/collections/UserCheckoutFlow/"User Checkout Flow.postman_collection.json" -e ./Automation/Postman/envs/DevQA.postman_environment.json -d ./Automation/Postman/collections/UserCheckoutFlow/DataFiles/DevQA_UserCheckoutFlow.json -r htmlextra --reporter-htmlextra-export htmlreport.html
           
      - name: Output the run Details
@@ -59,7 +58,7 @@ jobs:
        uses: actions/upload-artifact@v2
        with: 
           name: RunReports
-          #path: testResults      
+          path: .      
       
     #steps:
     #- name: Echo test
