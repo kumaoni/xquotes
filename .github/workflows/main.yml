@@ -64,7 +64,7 @@ jobs:
           echo "Running step on scheduled run"
           npm install -g newman-reporter-htmlextra
           mkdir -p testResults
-          newman run ./Automation/Postman/collections/UserCheckoutFlow/"User Checkout Flow.postman_collection.json" -e ./Automation/Postman/envs/DevQA.postman_environment.json -d ./Automation/Postman/collections/UserCheckoutFlow/DataFiles/DevQA_UserCheckoutFlow.json -r htmlextra --reporter-htmlextra-export testResults/htmlreport.html --reporter-htmlextra-browserTitle "LH Smoke Test Report" --reporter-htmlextra-title "LH Smoke Dashboard"
+          newman run ./Automation/Postman/collections/UserCheckoutFlow/"User Checkout Flow.postman_collection.json" -e ./Automation/Postman/envs/DevQA.postman_environment.json -d ./Automation/Postman/collections/UserCheckoutFlow/DataFiles/DevQA_UserCheckoutFlow_scheduled.json -r htmlextra --reporter-htmlextra-export testResults/htmlreport.html --reporter-htmlextra-browserTitle "LH Smoke Test Report" --reporter-htmlextra-title "LH Smoke Dashboard"
         
      - name: Output the run Details
        if: steps.changed-files-specific.outputs.any_changed == 'true' || github.event_name == 'push'
