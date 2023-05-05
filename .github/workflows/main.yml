@@ -13,6 +13,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+     data_file: DevQA_UserCheckoutFlow.json
 
     #container: 
      #image: postman/newman
