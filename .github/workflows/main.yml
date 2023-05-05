@@ -23,6 +23,7 @@ jobs:
        if: github.event_name != 'schedule'
        env:
          data_file: DevQA_UserCheckoutFlow_scheduled.json
+       run: echo "$data_file"
         
      - name: Checkout
        uses: actions/checkout@v3
