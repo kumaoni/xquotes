@@ -8,7 +8,7 @@ on:
     - anshu6
     - anshu4
   schedule:
-    - cron: '*/15 * * * *'
+    - cron: '15 * * * *'
 
 jobs:
   build:
@@ -58,7 +58,7 @@ jobs:
           mkdir -p testResults
           newman run ./Automation/Postman/collections/UserCheckoutFlow/"User Checkout Flow.postman_collection.json" -e ./Automation/Postman/envs/DevQA.postman_environment.json -d ./Automation/Postman/collections/UserCheckoutFlow/DataFiles/DevQA_UserCheckoutFlow.json -r htmlextra --reporter-htmlextra-export testResults/htmlreport.html --reporter-htmlextra-browserTitle "LH Smoke Test Report" --reporter-htmlextra-title "LH Smoke Dashboard"
           
-     - name: Run step its a scheduled trigger
+     - name: Run step if its a scheduled trigger
        if: github.event_name == 'push'      
        run: |
           echo "Running step on scheduled run"
