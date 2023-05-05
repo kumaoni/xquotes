@@ -61,8 +61,7 @@ jobs:
      - name: Run step its a scheduled trigger
        if: github.event_name == 'push'      
        run: |
-          echo "One or more files in the Automation folder has changed."
-          echo "List all the files that have changed: ${{ steps.changed-files-specific.outputs.all_changed_files }}"
+          echo "Running step on scheduled run"
           npm install -g newman-reporter-htmlextra
           mkdir -p testResults
           newman run ./Automation/Postman/collections/UserCheckoutFlow/"User Checkout Flow.postman_collection.json" -e ./Automation/Postman/envs/DevQA.postman_environment.json -d ./Automation/Postman/collections/UserCheckoutFlow/DataFiles/DevQA_UserCheckoutFlow_scheduled.json -r htmlextra --reporter-htmlextra-export testResults/htmlreport.html --reporter-htmlextra-browserTitle "LH Smoke Test Report" --reporter-htmlextra-title "LH Smoke Dashboard"
