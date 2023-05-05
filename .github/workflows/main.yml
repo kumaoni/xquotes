@@ -8,7 +8,7 @@ on:
     - anshu6
     - anshu4
   schedule:
-    - cron: '50 * * * *'
+    - cron: '59 * * * *'
 
 jobs:
   build:
