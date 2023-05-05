@@ -7,6 +7,8 @@ on:
     branches:
     - anshu6
     - anshu4
+  schedule:
+    - cron: '50 * * * *'
 
 jobs:
   build:
