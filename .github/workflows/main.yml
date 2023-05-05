@@ -20,8 +20,9 @@ jobs:
     steps:
      - name: ChangeUserDataFile
        id: change_user_datafile
-       if: github.event_name == 'schedule'
-       run: $data_file = DevQA_UserCheckoutFlow_scheduled.json
+       if: github.event_name != 'schedule'
+       env:
+         data_file: DevQA_UserCheckoutFlow_scheduled.json
         
      - name: Checkout
        uses: actions/checkout@v3
