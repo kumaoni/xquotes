@@ -13,18 +13,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-     data_file: DevQA_UserCheckoutFlow.json
 
     #container: 
      #image: postman/newman
     steps:
-     - name: ChangeUserDataFile
-       id: change_user_datafile
-       if: github.event_name != 'schedule'
-       run: |
-        echo "DevQA_UserCheckoutFlow_scheduled.json" >> ${{ env.data_file }}
-        echo "$data_file"
         
      - name: Checkout
        uses: actions/checkout@v3
@@ -49,7 +41,6 @@ jobs:
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
             echo "$file was changed"
           done
-          echo "$data_file"
           
     # Example 2
      - name: Get changed files in the Automation folder
@@ -58,16 +49,24 @@ jobs:
        with:
         files: Automation/**  # Alternatively using: `docs/**` or `docs`
 
-     - name: Run step if any file(s) in the Automation folder change or its a scheduled trigger
-       if: steps.changed-files-specific.outputs.any_changed == 'true' || github.event_name == 'push'      
+     - name: Run step if any file(s) in the Automation folder change
+       if: steps.changed-files-specific.outputs.any_changed == 'true'    
        run: |
           echo "One or more files in the Automation folder has changed."
           echo "List all the files that have changed: ${{ steps.changed-files-specific.outputs.all_changed_files }}"
           npm install -g newman-reporter-htmlextra
           mkdir -p testResults
-          echo "$data_file"
-          newman run ./Automation/Postman/collections/UserCheckoutFlow/"User Checkout Flow.postman_collection.json" -e ./Automation/Postman/envs/DevQA.postman_environment.json -d ./Automation/Postman/collections/UserCheckoutFlow/DataFiles/$data_file -r htmlextra --reporter-htmlextra-export testResults/htmlreport.html --reporter-htmlextra-browserTitle "LH Smoke Test Report" --reporter-htmlextra-title "LH Smoke Dashboard"
+          newman run ./Automation/Postman/collections/UserCheckoutFlow/"User Checkout Flow.postman_collection.json" -e ./Automation/Postman/envs/DevQA.postman_environment.json -d ./Automation/Postman/collections/UserCheckoutFlow/DataFiles/DevQA_UserCheckoutFlow.json -r htmlextra --reporter-htmlextra-export testResults/htmlreport.html --reporter-htmlextra-browserTitle "LH Smoke Test Report" --reporter-htmlextra-title "LH Smoke Dashboard"
           
+     - name: Run step its a scheduled trigger
+       if: github.event_name == 'push'      
+       run: |
+          echo "One or more files in the Automation folder has changed."
+          echo "List all the files that have changed: ${{ steps.changed-files-specific.outputs.all_changed_files }}"
+          npm install -g newman-reporter-htmlextra
+          mkdir -p testResults
+          newman run ./Automation/Postman/collections/UserCheckoutFlow/"User Checkout Flow.postman_collection.json" -e ./Automation/Postman/envs/DevQA.postman_environment.json -d ./Automation/Postman/collections/UserCheckoutFlow/DataFiles/DevQA_UserCheckoutFlow_scheduled.json -r htmlextra --reporter-htmlextra-export testResults/htmlreport.html --reporter-htmlextra-browserTitle "LH Smoke Test Report" --reporter-htmlextra-title "LH Smoke Dashboard"
+        
      - name: Output the run Details
        if: steps.changed-files-specific.outputs.any_changed == 'true' || github.event_name == 'push'
        uses: actions/upload-artifact@v2
