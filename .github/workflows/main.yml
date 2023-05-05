@@ -21,7 +21,7 @@ jobs:
        id: change_user_datafile
        if: github.event_name != 'schedule'
        run: |
-        echo "DevQA_UserCheckoutFlow_scheduled.json" >> data_file
+        echo "DevQA_UserCheckoutFlow_scheduled.json" >> $data_file
         echo "$data_file"
         
      - name: Checkout
