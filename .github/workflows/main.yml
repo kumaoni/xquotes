@@ -48,6 +48,7 @@ jobs:
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
             echo "$file was changed"
           done
+          echo "$data_file"
           
     # Example 2
      - name: Get changed files in the Automation folder
@@ -63,6 +64,7 @@ jobs:
           echo "List all the files that have changed: ${{ steps.changed-files-specific.outputs.all_changed_files }}"
           npm install -g newman-reporter-htmlextra
           mkdir -p testResults
+          echo "$data_file"
           newman run ./Automation/Postman/collections/UserCheckoutFlow/"User Checkout Flow.postman_collection.json" -e ./Automation/Postman/envs/DevQA.postman_environment.json -d ./Automation/Postman/collections/UserCheckoutFlow/DataFiles/$data_file -r htmlextra --reporter-htmlextra-export testResults/htmlreport.html --reporter-htmlextra-browserTitle "LH Smoke Test Report" --reporter-htmlextra-title "LH Smoke Dashboard"
           
      - name: Output the run Details
