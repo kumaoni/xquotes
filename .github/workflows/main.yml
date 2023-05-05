@@ -13,17 +13,16 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      data_file: DevQA_UserCheckoutFlow.json
+
     #container: 
      #image: postman/newman
     steps:
      - name: ChangeUserDataFile
        id: change_user_datafile
        if: github.event_name != 'schedule'
-       env:
-         job.build.data_file: DevQA_UserCheckoutFlow_scheduled.json
-       run: echo "$data_file"
+       run: |
+        echo "DevQA_UserCheckoutFlow_scheduled.json" >> data_file
+        echo "$data_file"
         
      - name: Checkout
        uses: actions/checkout@v3
