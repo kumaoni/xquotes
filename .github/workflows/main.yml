@@ -8,7 +8,7 @@ on:
     - anshu6
     - anshu4
   schedule:
-    - cron: '15 15 * * *'
+    - cron: '45 * * * *'
 
 jobs:
   build:
@@ -51,7 +51,7 @@ jobs:
         files: Automation/**  # Alternatively using: `docs/**` or `docs`
 
      - name: Run step if any file(s) in the Automation folder change
-       if: steps.changed-files-specific.outputs.any_changed == 'true'    
+       if: github.event_name == 'push' && steps.changed-files-specific.outputs.any_changed == 'true'    
        run: |
           echo "One or more files in the Automation folder has changed."
           echo "List all the files that have changed: ${{ steps.changed-files-specific.outputs.all_changed_files }}"
@@ -68,7 +68,7 @@ jobs:
           newman run ./Automation/Postman/collections/UserCheckoutFlow/"User Checkout Flow.postman_collection.json" -e ./Automation/Postman/envs/DevQA.postman_environment.json -d ./Automation/Postman/collections/UserCheckoutFlow/DataFiles/DevQA_UserCheckoutFlow_scheduled.json -r htmlextra --reporter-htmlextra-export testResults/htmlreport.html --reporter-htmlextra-browserTitle "LH Smoke Test Report" --reporter-htmlextra-title "LH Smoke Dashboard"
         
      - name: Output the run Details
-       if: steps.changed-files-specific.outputs.any_changed == 'true' || github.event_name == 'schedule'
+       if: (github.event_name == 'push' && steps.changed-files-specific.outputs.any_changed == 'true') || github.event_name == 'schedule'
        uses: actions/upload-artifact@v2
        with: 
           name: RunReports
