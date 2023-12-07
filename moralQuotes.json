@@ -13,7 +13,11 @@
           "q2": "Garajne wale badal, baraste nahi"
         }
       ],
-      "Telugu": ""
+      "Telugu": [
+        {
+          "q1": "Morigey kukka karavadu"
+        }
+      ]
     },
     {
       "qtId": 2,
